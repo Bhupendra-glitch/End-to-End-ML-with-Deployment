@@ -32,22 +32,7 @@ The analysis includes **Exploratory Data Analysis (EDA), statistical insights, a
 
 ---
 
-# 👨‍💻 About Me
 
-**Bhupendra Sahu**
-
-- 🎓 B.Tech Student – Shri Shankaracharya Technical Campus
-- 🎓 IIT Madras BS Online Program (Qualifier)
-- 📊 Interested in Data Science, Machine Learning, and AI
-
----
-
-# 🔗 Connect with Me
-
-- 💼 LinkedIn: *(Add your LinkedIn link here)*
-- 💻 GitHub: *(Add your GitHub link here)*
-
----
 
 # 📊 Overview of the Dataset
 

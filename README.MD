@@ -1,4 +1,4 @@
-
+![alt text](image-2.png)
 # 🏏 IPL Data Analysis: Trends, Patterns & Insights
 
 ## 📊 Project Overview
@@ -125,6 +125,7 @@ Displays performance of teams across seasons.
 ## Top 5 Teams Stats
 
 Compares the best performing teams.
+![alt text](image-3.png)
 
 ## Teams with Most Wins
 
@@ -135,6 +136,8 @@ Shows teams with the highest number of victories.
 Displays highest team scores in IPL history.
 
 ## Highest Chase by Teams
+![alt text](image-4.png)
+![alt text](image-5.png)
 
 Analyzes the highest successful run chases.
 
@@ -153,6 +156,7 @@ Analyzes how players perform against specific teams.
 ## Batsman vs Batsman
 
 Comparison between different batsmen.
+![alt text](image-6.png)
 
 ## Most Runs in IPL by Players
 
@@ -179,6 +183,7 @@ Fielding statistics of top players.
 Comparison of top-performing batsmen.
 
 ## Batsman Growth Over Season
+![alt text](image-7.png)
 
 Tracks batting performance across seasons.
 
@@ -203,6 +208,7 @@ Bowler performance against different teams.
 Comparison between bowlers.
 
 ## Top 10 Bowlers
+![alt text](image-8.png)
 
 Best bowlers based on performance metrics.
 

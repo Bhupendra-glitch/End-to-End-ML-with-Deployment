@@ -1,7 +1,13 @@
 import streamlit as st
 import pandas as pd
-import plotly.express as px
-import plotly.graph_objects as go
+
+try:
+    import plotly.express as px
+    import plotly.graph_objects as go
+except ImportError:
+    px = None
+    go = None
+
 from utils import load_data
 
 st.title("📌 Insights & Conclusions")
@@ -36,12 +42,15 @@ with col2:
     st.metric("Batting First Matches", len(batting_first_matches))
 
 # Visualization
-fig1 = go.Figure(data=[
-    go.Bar(name='Chasing', x=['Win Rate'], y=[chasing_win_rate], marker_color='green'),
-    go.Bar(name='Batting First', x=['Win Rate'], y=[batting_win_rate], marker_color='blue')
-])
-fig1.update_layout(title="Win Rates: Chasing vs Batting First", barmode='group')
-st.plotly_chart(fig1)
+if px and go:
+    fig1 = go.Figure(data=[
+        go.Bar(name='Chasing', x=['Win Rate'], y=[chasing_win_rate], marker_color='green'),
+        go.Bar(name='Batting First', x=['Win Rate'], y=[batting_win_rate], marker_color='blue')
+    ])
+    fig1.update_layout(title="Win Rates: Chasing vs Batting First", barmode='group')
+    st.plotly_chart(fig1)
+else:
+    st.warning("Plotly not available. Install plotly to see visualizations.")
 
 st.markdown(f"""
 **Analysis**: Teams that win the toss and choose to field (chasing) have a **{chasing_win_rate:.1f}%** win rate compared to **{batting_win_rate:.1f}%** for teams batting first.
@@ -57,11 +66,15 @@ batter_runs = deliveries.groupby('batter')['batsman_runs'].sum().sort_values(asc
 # Get top 10 batsmen
 top_batsmen = batter_runs.head(10)
 
-fig2 = px.bar(top_batsmen, x=top_batsmen.index, y=top_batsmen.values,
-              title="Top 10 Run Scorers in IPL History",
-              labels={'x': 'Batsman', 'y': 'Total Runs'})
-fig2.update_layout(xaxis_tickangle=-45)
-st.plotly_chart(fig2)
+if px:
+    fig2 = px.bar(top_batsmen, x=top_batsmen.index, y=top_batsmen.values,
+                  title="Top 10 Run Scorers in IPL History",
+                  labels={'x': 'Batsman', 'y': 'Total Runs'})
+    fig2.update_layout(xaxis_tickangle=-45)
+    st.plotly_chart(fig2)
+else:
+    st.warning("Plotly not available. Install plotly to see visualizations.")
+    st.dataframe(top_batsmen)
 
 # Calculate percentage of total runs by top batsmen
 total_runs = deliveries['batsman_runs'].sum()
@@ -84,11 +97,15 @@ venue_scores = matches.groupby('venue')['target_runs'].mean().dropna().sort_valu
 # Get top 10 high-scoring venues
 top_venues = venue_scores.head(10)
 
-fig3 = px.bar(top_venues, x=top_venues.index, y=top_venues.values,
-              title="Top 10 High-Scoring Venues",
-              labels={'x': 'Venue', 'y': 'Average Target Runs'})
-fig3.update_layout(xaxis_tickangle=-45)
-st.plotly_chart(fig3)
+if px:
+    fig3 = px.bar(top_venues, x=top_venues.index, y=top_venues.values,
+                  title="Top 10 High-Scoring Venues",
+                  labels={'x': 'Venue', 'y': 'Average Target Runs'})
+    fig3.update_layout(xaxis_tickangle=-45)
+    st.plotly_chart(fig3)
+else:
+    st.warning("Plotly not available. Install plotly to see visualizations.")
+    st.dataframe(top_venues)
 
 # Venue comparison
 col1, col2 = st.columns(2)
@@ -116,10 +133,14 @@ season_wins = matches.groupby('season').agg({
 
 season_wins['win_percentage'] = (season_wins['completed_matches'] / season_wins['total_matches']) * 100
 
-fig4 = px.line(season_wins, x=season_wins.index, y='win_percentage',
-               title="Match Completion Rate by Season",
-               labels={'x': 'Season', 'y': 'Completion Rate (%)'})
-st.plotly_chart(fig4)
+if px:
+    fig4 = px.line(season_wins, x=season_wins.index, y='win_percentage',
+                   title="Match Completion Rate by Season",
+                   labels={'x': 'Season', 'y': 'Completion Rate (%)'})
+    st.plotly_chart(fig4)
+else:
+    st.warning("Plotly not available. Install plotly to see visualizations.")
+    st.dataframe(season_wins)
 
 # Toss impact analysis
 toss_impact = matches.groupby(['toss_decision', 'winner']).size().unstack().fillna(0)

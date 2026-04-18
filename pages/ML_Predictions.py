@@ -3,16 +3,22 @@ import pandas as pd
 import numpy as np
 from utils import load_data, get_teams
 
+import importlib.util
+
 # Try to import scikit-learn components
-try:
-    from sklearn.ensemble import RandomForestClassifier
-    from sklearn.model_selection import train_test_split
-    from sklearn.metrics import accuracy_score, classification_report
-    from sklearn.preprocessing import LabelEncoder
-    SKLEARN_AVAILABLE = True
-except ImportError:
-    SKLEARN_AVAILABLE = False
-    st.error("❌ scikit-learn is not available. Please install it with: `pip install scikit-learn`")
+SKLEARN_AVAILABLE = False
+SKLEARN_DIAG = None
+
+if importlib.util.find_spec("sklearn") is not None:
+    try:
+        from sklearn.ensemble import RandomForestClassifier
+        from sklearn.model_selection import train_test_split
+        from sklearn.metrics import accuracy_score, classification_report
+        SKLEARN_AVAILABLE = True
+    except Exception as exc:
+        SKLEARN_DIAG = exc
+else:
+    SKLEARN_DIAG = "sklearn package not found in the current Python environment"
 
 st.title("🤖 Machine Learning Predictions")
 
@@ -21,7 +27,10 @@ teams = get_teams(matches)
 
 if not SKLEARN_AVAILABLE:
     st.error("⚠️ Machine Learning features are disabled due to missing scikit-learn dependency.")
-    st.info("To enable ML predictions, run: `pip install scikit-learn`")
+    st.info("To enable ML predictions, run: `pip install scikit-learn` in the same Python environment used by Streamlit.")
+    if SKLEARN_DIAG is not None:
+        st.write("### Diagnostic details")
+        st.write(SKLEARN_DIAG)
     st.stop()
 
 # Create tabs for different prediction types

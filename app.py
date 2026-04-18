@@ -14,24 +14,6 @@ except ImportError:
 BASE_DIR = Path(__file__).resolve().parent
 
 
-# If user not logged in
-if "user" not in st.session_state:
-
-    st.title("🔐 IPL SaaS Login")
-
-    option = st.selectbox("Choose", ["Login", "Signup"])
-
-    if option == "Login":
-        from auth.login import login_ui
-        login_ui()
-
-    else:
-        from auth.signup import signup_ui
-        signup_ui()
-
-    # Stop app until login
-    st.stop()
-
 # ---------------- CONFIG ----------------
 st.set_page_config(page_title="IPL Analysis", layout="wide")
 

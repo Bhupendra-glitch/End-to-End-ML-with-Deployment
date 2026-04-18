@@ -3,7 +3,7 @@ from utils import load_data, get_teams
 
 st.title("🏏 Team Analysis")
 
-matches, _ = load_data()
+matches = pd.read_csv("E:\Py3\End-to-End-ML-with-Deployment\matches.csv")
 teams = get_teams(matches)
 
 team = st.selectbox("Select Team", teams)

@@ -1,4 +1,4 @@
-![alt text](image-2.png)
+E:\Py3\End-to-End-ML-with-Deployment\image\image-1.png
 # 🏏 IPL Data Analysis: Trends, Patterns & Insights
 
 ## 📊 Project Overview

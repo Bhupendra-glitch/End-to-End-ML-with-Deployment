@@ -10,6 +10,14 @@ try:
 except ImportError:
     PLOTLY_AVAILABLE = False
 
+try:
+    import matplotlib
+    matplotlib.use('Agg')
+    import matplotlib.pyplot as plt
+    MATPLOTLIB_AVAILABLE = True
+except ImportError:
+    MATPLOTLIB_AVAILABLE = False
+
 # Check sklearn availability
 SKLEARN_AVAILABLE = False
 SKLEARN_DIAG = None
@@ -101,9 +109,12 @@ with st.expander("Numeric feature distributions"):
         if PLOTLY_AVAILABLE:
             fig = px.histogram(df, x=selected_numeric, nbins=30, title=f"Distribution of {selected_numeric}")
             st.plotly_chart(fig, use_container_width=True)
+        elif MATPLOTLIB_AVAILABLE:
+            fig, ax = plt.subplots()
+            df[selected_numeric].hist(bins=30, ax=ax)
+            st.pyplot(fig)
         else:
-            st.write(df[selected_numeric].hist(bins=30))
-            st.warning("Install plotly for richer interactive charts.")
+            st.write("Plotting libraries not available for histogram.")
 
 with st.expander("Categorical feature breakdown"):
     if not categorical_columns:
